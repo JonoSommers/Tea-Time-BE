@@ -4,5 +4,5 @@ class SubscriptionCustomer < ApplicationRecord
 
     validates :subscription_id, presence: true
     validates :customer_id, presence: true
-    validates :status, presence: true, inclusion: { in: [true, false] }
+    validates :status, inclusion: { in: [true, false] }
 end
