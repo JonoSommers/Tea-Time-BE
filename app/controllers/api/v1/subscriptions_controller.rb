@@ -1,6 +1,6 @@
 class Api::V1::SubscriptionsController < ApplicationController
     def index
-        render json: SubscriptionSerializer.new(Subscription.all, { params: { include_customers: false } }), status: :ok
+        render json: SubscriptionSerializer.new(Subscription.all), status: :ok
     end
 
     def show
