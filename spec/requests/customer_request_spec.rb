@@ -4,13 +4,8 @@ RSpec.describe 'Customer Controller', type: :request do
     before :each do
         customers = FactoryBot.create_list(:customer, 5)
         subscriptions = FactoryBot.create_list(:subscription, 3)
-
-        customers.each do |customer|
-            subscriptions.sample(2).each do |subscription|
-                status = [true, false].sample
-                FactoryBot.create(:subscription_customer, customer: customer, subscription: subscription, status: status)
-            end
-        end
+        active_subscription = subscriptions.sample
+        FactoryBot.create(:subscription_customer, customer: customers.first, subscription: active_subscription, status: true)
     end
 
     describe 'GET /api/v1/customers' do
