@@ -8,6 +8,21 @@ RSpec.describe 'Subscription Controller', type: :request do
         FactoryBot.create(:subscription_customer, customer: @customers.last, subscription: @subscriptions.first, status: false)
     end
 
+    describe 'GET /api/v1/teas' do
+        it 'returns all teas and their data.' do
+            get api_v1_subscriptions_path
+            expect(response).to be_successful
+            expect(response.status).to eq(200)
+            json = JSON.parse(response.body, symbolize_names: true)
+            expect(json[:data]).to be_a Array
+            expect(json[:data].count).to eq(5)
+            expect(json[:data].first[:attributes]).to include(:name)
+            expect(json[:data].first[:attributes]).to include(:price)
+            expect(json[:data].first[:attributes]).to include(:description)
+            expect(json[:data].first[:attributes]).to include(:users_subscribed)
+        end
+    end
+
     describe 'GET /api/v1/subscriptions/:id' do
         it 'returns all subscriptions and their data, including an additional customers attribute with name, email, and status.' do
             get api_v1_subscription_path(@subscriptions.first.id)
