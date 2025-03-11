@@ -1,8 +1,12 @@
 class Api::V1::SubscriptionCustomersController < ApplicationController
     def update
         subscription = Subscription.find(params[:subscription_id])
-        SubscriptionCustomer.update_status(params[:customer_id], subscription)
+        subscription_customer = subscription.subscription_customers.find_by(customer_id: params[:customer_id])
+        SubscriptionCustomer.update_status(params[:customer_id], subscription, subscription_customer)
         Subscription.update_users_subscribed(params[:subscription_id])
-        render json: SubscriptionSerializer.new(subscription)
+        render json: { 
+            subscription: SubscriptionSerializer.new(subscription),
+            subscription_customer: SubscriptionCustomerSerializer.new(subscription_customer)
+        }
     end
 end

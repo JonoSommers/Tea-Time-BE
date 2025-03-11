@@ -1,5 +1,4 @@
 class SubscriptionCustomerSerializer
   include JSONAPI::Serializer
-  belongs_to :subscription
-  belongs_to :customer
+  attributes :subscription_id, :customer_id, :status
 end
