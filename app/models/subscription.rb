@@ -8,4 +8,9 @@ class Subscription < ApplicationRecord
     validates :price, presence: true, numericality: true
     validates :description, presence: true
     validates :users_subscribed, presence: true, numericality: { only_integer: true}
+
+    def self.update_users_subscribed(subscription_id)
+        subscription = Subscription.find(subscription_id)
+        subscription.update(users_subscribed: subscription.subscription_customers.where(status: true).count)
+    end
 end
