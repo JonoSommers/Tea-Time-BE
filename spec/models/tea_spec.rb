@@ -7,7 +7,7 @@ RSpec.describe Tea, type: :model do
         it { should validate_presence_of(:description) }
         it { should validate_presence_of(:temperature) }
         it { should validate_numericality_of(:temperature).only_integer }
-        it { should validate_uniqueness_of(:brew_time) }
+        it { should validate_presence_of(:brew_time) }
         it { should validate_numericality_of(:brew_time).only_integer }
     end
 
