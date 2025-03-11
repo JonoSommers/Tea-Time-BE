@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe 'Customer Controller', type: :request do
     before :each do
-        customers = FactoryBot.create_list(:customer, 5)
-        subscriptions = FactoryBot.create_list(:subscription, 3)
-        active_subscription = subscriptions.sample
-        FactoryBot.create(:subscription_customer, customer: customers.first, subscription: active_subscription, status: true)
+        @customers = FactoryBot.create_list(:customer, 5)
+        @subscriptions = FactoryBot.create_list(:subscription, 3)
+        FactoryBot.create(:subscription_customer, customer: @customers.first, subscription: @subscriptions.first, status: true)
+        FactoryBot.create(:subscription_customer, customer: @customers.first, subscription: @subscriptions.first, status: true)
     end
 
     describe 'GET /api/v1/customers' do
