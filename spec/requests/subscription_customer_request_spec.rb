@@ -44,4 +44,33 @@ RSpec.describe 'SubscriptionCustomers Controller', type: :request do
             expect(json[:subscription_customer][:data][:attributes][:status]).to eq(true)
         end
     end
+
+    describe 'Sad Paths for Update Status' do
+        it 'returns a 422, Unprocessable_entity, error for an invlaid customer_id in the request body.' do
+            patch api_v1_subscription_subscription_customer_path(@subscriptions.first.id, @subscription_customer1.id), params: { customer_id: 999 }
+            expect(response).to have_http_status(:unprocessable_entity)
+            json = JSON.parse(response.body, symbolize_names: true)
+            expect(json[:error][:status]).to eq("422")
+            expect(json[:error][:title]).to eq("Unprocessable_entity")
+            expect(json[:error][:message]).to eq("Customer must exist")
+        end
+
+        it 'returns a 422, Unprocessable_entity, error for a blank request body.' do
+            patch api_v1_subscription_subscription_customer_path(@subscriptions.first.id, @subscription_customer1.id), params: {}
+            expect(response).to have_http_status(:unprocessable_entity)
+            json = JSON.parse(response.body, symbolize_names: true)
+            expect(json[:error][:status]).to eq("422")
+            expect(json[:error][:title]).to eq("Unprocessable_entity")
+            expect(json[:error][:message]).to eq("Customer must exist and Customer can't be blank")
+        end
+
+        it 'returns a 404, Record Not Found, error for an invalid subscription_id.' do
+            patch api_v1_subscription_subscription_customer_path(99999, @subscription_customer1.id), params: { customer_id: @customers[1].id }
+            expect(response).to have_http_status(:not_found)
+            json = JSON.parse(response.body, symbolize_names: true)
+            expect(json[:error][:status]).to eq("404")
+            expect(json[:error][:title]).to eq("Record Not Found")
+            expect(json[:error][:message]).to eq("Couldn't find Subscription with 'id'=99999")
+        end
+    end
 end
