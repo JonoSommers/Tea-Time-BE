@@ -8,12 +8,16 @@ class SubscriptionCustomer < ApplicationRecord
 
     def self.update_status(customer_id, subscription, subscription_customer)
         if subscription_customer
-            subscription_customer.update(status: !subscription_customer.status)
+            new_status = !subscription_customer.status
+            subscription_customer.update!(status: new_status)
+            active_subscribers = subscription.subscription_customers.where(status: true).count
+            subscription.update!(users_subscribed: active_subscribers)
         else
             subscription_customer = subscription.subscription_customers.create!(
                 customer_id: customer_id, 
                 status: true
             )
         end
+        subscription_customer
     end
 end
