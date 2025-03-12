@@ -13,13 +13,12 @@ class ErrorSerializer
         }
     end
 
-    def self.format_error(status, message, title = "Error", detail = nil )
+    def self.format_error(status, message, title = "Error")
         {
             error: {
                 status: status.to_s,
                 title: title,
-                message: message,
-                detail: detail
+                message: message
             }
         }
     end

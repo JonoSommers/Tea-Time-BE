@@ -45,7 +45,6 @@ RSpec.describe 'Subscription Controller', type: :request do
             expect(json[:data][:attributes][:customers].last).to include(:status)
             expect(json[:data][:attributes][:customers].first[:email]).to eq(@customers.first.email)
             expect(json[:data][:attributes][:customers].last[:email]).to eq(@customers.last.email)
-            
         end
 
         it 'returns an empty customers array if no customers are (or have ever been) subscribed.' do
