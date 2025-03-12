@@ -1,6 +1,6 @@
 class SubscriptionSerializer
   include JSONAPI::Serializer
-  attributes :name, :price, :description, :users_subscribed
+  attributes :name, :price, :description, :img, :users_subscribed
 
   attribute :customers, if: Proc.new { |subscription, params| params[:include_customers] == true } do |subscription|
     subscription.subscription_customers

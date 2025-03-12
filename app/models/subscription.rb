@@ -8,4 +8,5 @@ class Subscription < ApplicationRecord
     validates :price, presence: true, numericality: true
     validates :description, presence: true
     validates :users_subscribed, presence: true, numericality: { only_integer: true}
+    validates :img, presence: true
 end

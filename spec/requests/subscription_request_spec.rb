@@ -19,6 +19,7 @@ RSpec.describe 'Subscription Controller', type: :request do
             expect(json[:data].first[:attributes]).to include(:name)
             expect(json[:data].first[:attributes]).to include(:price)
             expect(json[:data].first[:attributes]).to include(:description)
+            expect(json[:data].first[:attributes]).to include(:img)
             expect(json[:data].first[:attributes]).to include(:users_subscribed)
         end
     end
@@ -34,6 +35,7 @@ RSpec.describe 'Subscription Controller', type: :request do
             expect(json[:data][:attributes]).to include(:name)
             expect(json[:data][:attributes]).to include(:price)
             expect(json[:data][:attributes]).to include(:description)
+            expect(json[:data].first[:attributes]).to include(:img)
             expect(json[:data][:attributes]).to include(:users_subscribed)
             expect(json[:data][:attributes]).to include(:customers)
             expect(json[:data][:attributes][:customers].count).to eq(2)
