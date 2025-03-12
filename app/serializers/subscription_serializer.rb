@@ -15,4 +15,19 @@ class SubscriptionSerializer
         }
       end
   end
+
+  attribute :teas, if: Proc.new { |subscription, params| params[:include_teas] == true } do |subscription|
+    subscription.subscription_teas
+      .includes(:tea)
+      .where(subscription_teas: { subscription_id: subscription.id })
+      .map do |subscription_tea|
+        tea = subscription_tea.tea
+        {
+          name: tea.name,
+          description: tea.description,
+          temperature: tea.temperature,
+          brew_time: tea.brew_time
+        }
+      end
+  end
 end
