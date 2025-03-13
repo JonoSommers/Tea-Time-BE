@@ -40,6 +40,7 @@ RSpec.describe 'Subscription Controller', type: :request do
             expect(json[:data][:attributes]).to include(:img)
             expect(json[:data][:attributes]).to include(:users_subscribed)
             expect(json[:data][:attributes]).to include(:customers)
+            expect(json[:data][:attributes]).to include(:joins_records)
             expect(json[:data][:attributes][:customers].count).to eq(2)
             expect(json[:data][:attributes][:customers].first).to include(:name)
             expect(json[:data][:attributes][:customers].first).to include(:email)
